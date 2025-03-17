@@ -163,7 +163,7 @@ class Uart(AbstractConnection):
             if self.trace:
                 print("UART sending  '"  + self.write_color + text.rstrip() + self.reset_color + "'")
             self.last_write = text
-            self.link.write(bytes(str(text).rstrip() + '\n', 'utf-8'))
+            self.link.write(bytes(str(text).rstrip() + '\r\n', 'utf-8'))
             self.link.flush()
             time.sleep(5/1000)
 
@@ -244,7 +244,7 @@ class Uart(AbstractConnection):
     def run(self, cmd, wait_ms=0):
         self.write(cmd)
         res = ''
-        time.sleep(wait_ms/1000)
+        time.sleep(0.2 + wait_ms/1000)
         lines = self.read().split('\n')
         if lines[0].rstrip() == cmd.rstrip():
             # Skip echo of 'cmd' (when remote is a direct shell console)
