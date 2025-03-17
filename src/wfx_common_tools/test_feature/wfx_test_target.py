@@ -82,6 +82,10 @@ class WfxTestTarget(object):
         else:
             self.fmac_cli = False
 
+        print("Enabling wifi")
+        self.run('wifi scan')
+        time.sleep(3)
+
         if 'fw_version' in kwargs:
             fw_version = kwargs['fw_version']
             print("%s: fw_version forced (%s)" % (self.nickname, fw_version))
